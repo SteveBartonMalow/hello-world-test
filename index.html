@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barton Malow — Hello World</title>
+  <style>
+    :root {
+      --bm-blue:#00263A; --bm-orange:#E35205; --bm-white:#FFFFFF; --bm-text:#1A1A1A;
+      --bm-steel:#4F758B; --bm-rebar:#A5BAC9; --bm-slate:#7A97AB; --bm-craftsman:#264061;
+      --bm-rebar-20:rgba(165,186,201,0.20);
+      --bm-bg:#F4F6F8; --bm-surface:#FFFFFF; --bm-border:#A5BAC9;
+      --t-yellow:#FFB71B; --t-blue:#009ADE; --t-green:#6BA43A; --t-red:#C40D3C;
+      --radius:3px; --shadow:0 1px 3px rgba(0,0,0,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'URW DIN', Arial, sans-serif;
+      background: var(--bm-bg);
+      color: var(--bm-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--bm-blue);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      border-bottom: 3px solid var(--bm-orange);
+    }
+
+    .logo {
+      font-family: 'Industry Black', 'Arial Black', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: var(--bm-white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--bm-orange);
+    }
+
+    nav a {
+      color: var(--bm-rebar);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a:focus { color: var(--bm-white); outline: none; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--bm-blue);
+      color: var(--bm-white);
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      display: block;
+      height: 4px;
+      background: var(--bm-orange);
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bm-slate);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Industry Black', 'Arial Black', Arial, sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--bm-orange);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--bm-rebar);
+      max-width: 540px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--bm-orange);
+      color: var(--bm-white);
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover, .btn-primary:focus {
+      background: #c44700;
+      transform: translateY(-1px);
+      outline: 2px solid var(--bm-orange);
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--bm-white);
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.75rem 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--bm-rebar);
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 0.75rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover, .btn-secondary:focus {
+      border-color: var(--bm-white);
+      color: var(--bm-white);
+      outline: 2px solid var(--bm-rebar);
+      outline-offset: 3px;
+    }
+
+    /* ── KPI STRIP ── */
+    .kpi-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      background: var(--bm-surface);
+      border-bottom: 1px solid var(--bm-border);
+      box-shadow: var(--shadow);
+    }
+
+    .kpi {
+      flex: 1 1 180px;
+      max-width: 260px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-right: 1px solid var(--bm-border);
+    }
+
+    .kpi:last-child { border-right: none; }
+
+    .kpi-value {
+      font-family: 'Industry Black', 'Arial Black', Arial, sans-serif;
+      font-size: 2.6rem;
+      color: var(--bm-blue);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value span { color: var(--bm-orange); }
+
+    .kpi-label {
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bm-steel);
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      width: 100%;
+    }
+
+    .section-header {
+      border-top: 2px solid var(--bm-orange);
+      padding-top: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bm-steel);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header h3 {
+      font-family: 'Industry Black', 'Arial Black', Arial, sans-serif;
+      font-size: 1.8rem;
+      color: var(--bm-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--bm-surface);
+      border: 1px solid var(--bm-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,38,58,0.14);
+      transform: translateY(-2px);
+    }
+
+    .card-accent {
+      height: 4px;
+      background: var(--bm-blue);
+    }
+
+    .card-accent.orange { background: var(--bm-orange); }
+    .card-accent.steel  { background: var(--bm-steel); }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-body h4 {
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 1rem;
+      color: var(--bm-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-body p {
+      font-size: 0.9rem;
+      color: var(--bm-steel);
+      line-height: 1.6;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead tr {
+      background: var(--bm-blue);
+      color: var(--bm-white);
+    }
+
+    thead th {
+      font-family: 'Industry Demi', Arial, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 1rem;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) { background: var(--bm-rebar-20); }
+    tbody tr:nth-child(odd)  { background: var(--bm-surface); }
+
+    tbody td {
+      padding: 0.75rem 1rem;
+      color: var(--bm-text);
+      border-bottom: 1px solid var(--bm-border);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-family: 'Industry Demi', Arial, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .badge-green  { background: rgba(107,164,58,0.15);  color: var(--t-green); }
+    .badge-yellow { background: rgba(255,183,27,0.15);  color: #a07000; }
+    .badge-blue   { background: rgba(0,154,222,0.15);   color: #0070a8; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: auto;
+      background: var(--bm-blue);
+      color: var(--bm-rebar);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      border-top: 3px solid var(--bm-orange);
+    }
+
+    footer strong { color: var(--bm-white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .btn-secondary { margin-left: 0; margin-top: 0.5rem; }
+      .kpi { border-right: none; border-bottom: 1px solid var(--bm-border); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Barton <span>Malow</span></div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Building with Purpose Since 1924</p>
+    <h1>Hello, <em>World.</em><br>We Build What Matters.</h1>
+    <p>From groundbreaking to grand opening, Barton Malow delivers construction excellence across every market sector — on time, on budget, and built to last.</p>
+    <a href="#services" class="btn-primary">Explore Our Work</a>
+    <a href="#contact" class="btn-secondary">Get in Touch</a>
+  </section>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-value">100<span>+</span></div>
+      <div class="kpi-label">Years of Excellence</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value">$<span>6</span>B</div>
+      <div class="kpi-label">Annual Volume</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value">9<span>K</span></div>
+      <div class="kpi-label">Team Members</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-value">50<span>+</span></div>
+      <div class="kpi-label">States Served</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="section" id="services">
+    <div class="section-header">
+      <h2>What We Do</h2>
+      <h3>Our Services</h3>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-icon">🏗️</div>
+          <h4>General Contracting</h4>
+          <p>Full-scope construction management from preconstruction through closeout, delivering quality on every project.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-accent orange"></div>
+        <div class="card-body">
+          <div class="card-icon">📐</div>
+          <h4>Design-Build</h4>
+          <p>Integrated design and construction under one roof — faster delivery, tighter budgets, and single-source accountability.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-accent steel"></div>
+        <div class="card-body">
+          <div class="card-icon">🔧</div>
+          <h4>Self-Perform Work</h4>
+          <p>Concrete, steel, and MEP self-perform capabilities give us unmatched control over schedule and quality.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS TABLE -->
+  <div style="background: var(--bm-surface); border-top: 1px solid var(--bm-border); border-bottom: 1px solid var(--bm-border);">
+    <div class="section" id="projects" style="padding-top: 3rem; padding-bottom: 3rem;">
+      <div class="section-header">
+        <h2>Portfolio</h2>
+        <h3>Featured Projects</h3>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Sector</th>
+              <th>Location</th>
+              <th>Value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ford Motor Co. — EV Battery Plant</td>
+              <td>Industrial</td>
+              <td>Marshall, MI</td>
+              <td>$3.5B</td>
+              <td><span class="badge badge-blue">In Progress</span></td>
+            </tr>
+            <tr>
+              <td>University of Michigan Stadium</td>
+              <td>Sports &amp; Entertainment</td>
+              <td>Ann Arbor, MI</td>
+              <td>$480M</td>
+              <td><span class="badge badge-green">Complete</span></td>
+            </tr>
+            <tr>
+              <td>Detroit Medical Center</td>
+              <td>Healthcare</td>
+              <td>Detroit, MI</td>
+              <td>$275M</td>
+              <td><span class="badge badge-green">Complete</span></td>
+            </tr>
+            <tr>
+              <td>Solar Farm — Phase II</td>
+              <td>Energy</td>
+              <td>Phoenix, AZ</td>
+              <td>$120M</td>
+              <td><span class="badge badge-yellow">Planning</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <div class="section" id="contact" style="text-align:center; padding-top: 4rem; padding-bottom: 4rem;">
+    <div class="section-header" style="display:inline-block; text-align:left;">
+      <h2>Let's Talk</h2>
+      <h3>Start Your Project</h3>
+    </div>
+    <p style="color:var(--bm-steel); max-width:480px; margin: 0 auto 2rem; font-size:0.95rem; line-height:1.65;">
+      Ready to build something extraordinary? Our team is standing by to help you plan, design, and deliver your next project.
+    </p>
+    <a href="mailto:hello@bartonmalow.com" class="btn-primary">Contact Barton Malow</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Barton Malow</strong> &nbsp;|&nbsp; Building Excellence Since 1924 &nbsp;|&nbsp; &copy; 2025 Barton Malow Company. All rights reserved.
+  </footer>
+
+</body>
+</html>
